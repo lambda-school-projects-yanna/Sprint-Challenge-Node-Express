@@ -22,12 +22,12 @@ class Projects extends React.Component {
     render() {
         return (
             <div>
-                <h2>Projects</h2>
                 { this.state.projects && this.state.projects.map(project => {
                     return (
                         <div>
-                           <h3>{project.name}</h3> 
-                           <p>{project.description}</p> 
+                            <h3>{project.id}</h3>
+                           <p> project name: {project.name}</p> 
+                           <p>project description: {project.description}</p> 
                         </div>
                     );
                 })}
