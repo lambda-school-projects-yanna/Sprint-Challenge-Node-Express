@@ -51,7 +51,7 @@ router.get('/:id/actions', (req, res) => {
 // ================ POST endpoints 
 
 router.post('/', (req, res) => {
-    proj = req.body;
+    const proj = req.body;
     if (!proj.name || !proj.description) {
         res.status(400).json({message: 'please provide the project with a name and description.'})
     }
@@ -64,6 +64,19 @@ router.post('/', (req, res) => {
             res.status(500).json({error: "the new project could not be posted"})
         })
     }
+});
+
+// ================ DELETE endpoints 
+
+router.delete('/:id', (req, res) => {
+    const projectId = req.params.id;
+    db.remove(projectId)
+        .then((proj) => {
+            res.status(204).json(proj)
+        })
+        .catch(() => {
+            res.status(500).json({error: "the project could not be removed."})
+        })
 });
 
 module.exports = router;

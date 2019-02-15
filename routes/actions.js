@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
 
 
 router.post('/', (req, res) => {
-    action = req.body;
+    const action = req.body;
     if (!action.project_id || !action.description || !action.notes) {
         res.status(400).json({message: 'please provide the action with a project_id, description, and notes.'})
     }
@@ -49,6 +49,19 @@ router.post('/', (req, res) => {
             res.status(500).json({error: "the new action could not be posted"})
         })
     }
+});
+
+// ================ DELETE endpoints 
+
+router.delete('/:id', (req, res) => {
+    const actionId = req.params.id;
+    db.remove(actionId)
+        .then((action) => {
+            res.status(204).json(action)
+        })
+        .catch(() => {
+            res.status(500).json({error: "the action could not be removed."})
+        })
 });
 
 module.exports = router;
