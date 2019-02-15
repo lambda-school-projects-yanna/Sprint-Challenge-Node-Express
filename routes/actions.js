@@ -64,4 +64,27 @@ router.delete('/:id', (req, res) => {
         })
 });
 
+// ================ PUT endpoints 
+
+router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const update = req.body;
+
+    db.update(id, update)
+        .then(actionMatch => {
+            if (!actionMatch) {
+                res.status(404).json({message: "The action with the specified ID does not exist."})
+            }
+            else if (!update.project_id || !update.description || !update.notes) {
+                res.status(400).json({ errorMessage: "Please provide notes, description, and project_id for the action." })
+            }
+            else {
+                res.status(200).json(update)
+            }
+        })
+        .catch(() => {
+            res.status(500).json({error: "The action information could not be modified."})
+        })
+});
+
 module.exports = router;
