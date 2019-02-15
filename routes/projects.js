@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors');
 
 const db = require('../data/helpers/projectModel');
 
 // ================ GET endpoints 
 
-router.get('/', (req, res) => {
+router.get('/', cors(), (req, res) => {
     db.get()
         .then(projects => {
             res.status(200).json(projects);
